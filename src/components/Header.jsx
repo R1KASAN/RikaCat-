@@ -1,7 +1,34 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaFacebookF, FaYoutube, FaInstagram } from 'react-icons/fa';
 
 function Header() {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  const backgroundImages = [
+    "https://yt3.googleusercontent.com/eM85gNhQiiV9_dInWZ_nR1sDzHl_gBowhMkIt0wh9cZb0Jrbddkh6Pi8rxE0Fw1f0sAB_1ByDA=w1707-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj","https://pbs.twimg.com/media/GCpRcDda8AAFYZo?format=jpg&name=4096x4096","https://pbs.twimg.com/media/GYtcfDlbgAEcZxd?format=jpg&name=4096x4096","https://pbs.twimg.com/media/GSqNyfUakAEh8lL?format=jpg&name=4096x4096"
+  ];
+
+  const transitionStyles = `
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    @keyframes fadeOut {
+      from { opacity: 1; }
+      to { opacity: 0; }
+    }
+    
+    .background-fade-in {
+      animation: fadeIn 1s ease-in-out forwards;
+    }
+    
+    .background-fade-out {
+      animation: fadeOut 1s ease-in-out forwards;
+    }
+  `;
+
   const headerStyle = {
     position: 'relative',
     textAlign: 'center',
@@ -20,7 +47,7 @@ function Header() {
     left: '0',
     width: '100%',
     height: '100%',
-    backgroundImage: 'url("https://yt3.googleusercontent.com/eM85gNhQiiV9_dInWZ_nR1sDzHl_gBowhMkIt0wh9cZb0Jrbddkh6Pi8rxE0Fw1f0sAB_1ByDA=w1707-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj")',
+    backgroundImage: `url("${backgroundImages[currentImageIndex]}")`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
@@ -29,6 +56,8 @@ function Header() {
     '@media (max-width: 768px)': {
       backgroundPosition: 'center center',
     },
+    opacity: isTransitioning ? 0 : 1,
+    transition: 'opacity 1s ease-in-out',
   };
 
   const contentStyle = {
@@ -127,6 +156,24 @@ function Header() {
     }
   `;
 
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      changeBackground();
+    }, 5000);
+
+    return () => clearInterval(intervalId);
+  }, [currentImageIndex]);
+
+  const changeBackground = () => {
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setCurrentImageIndex((prevIndex) => 
+        (prevIndex + 1) % backgroundImages.length
+      );
+      setIsTransitioning(false);
+    }, 1000);
+  };
+
   return (
     <header style={headerStyle}>
       <style>
@@ -155,7 +202,11 @@ function Header() {
           }
         `}
       </style>
-      <div style={backgroundStyle} />
+      <style>{transitionStyles}</style>
+      <div 
+        style={backgroundStyle} 
+        className={isTransitioning ? 'background-fade-out' : 'background-fade-in'}
+      />
       <div style={contentStyle} className="header-content">
         <h1 style={titleStyle}>เเนะนำตัว!</h1>
         <p style={subtitleStyle}>ชื่อ : Rika Chan</p>
