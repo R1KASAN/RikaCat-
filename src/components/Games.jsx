@@ -45,7 +45,7 @@ function Games() {
 
   const containerStyle = {
     padding: '20px',
-    maxWidth: '800px',
+    maxWidth: '1000px',
     margin: '0 auto',
     background: 'linear-gradient(135deg, rgba(255,192,203,0.3) 0%, rgba(255,182,193,0.2) 100%)',
     minHeight: '100vh',
@@ -101,22 +101,20 @@ function Games() {
 
   const gameGridStyle = {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
     gap: '20px',
   };
 
   const gameCardStyle = {
     background: 'rgba(255, 255, 255, 0.9)',
     borderRadius: '15px',
-    padding: '15px',
+    padding: '20px',
     transition: 'all 0.3s ease',
     border: '1px solid rgba(255,192,203,0.3)',
     boxShadow: '0 4px 6px rgba(0,0,0,0.05)',
     position: 'relative',
     overflow: 'hidden',
     textAlign: 'center',
-    maxWidth: '300px',
-    margin: '0 auto',
   };
 
   const gameImageStyle = {
@@ -246,9 +244,9 @@ function Games() {
     <>
       <style>{styleTag}</style>
       <style>{responsiveStyle}</style>
-      <div style={containerStyle} className="container">
+      <div style={containerStyle}>
         {Object.entries(gamesData).map(([tierId, tier]) => (
-          <div key={tierId} style={tierSectionStyle} className="tier-section">
+          <div key={tierId} style={tierSectionStyle}>
             <div style={{
               textAlign: 'center',
               marginBottom: '30px',

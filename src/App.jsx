@@ -2,6 +2,8 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Header from './components/Header';
 import About from './components/About';
+import Skills from './components/Skills';
+import Contact from './components/Contact';
 import Channel from './components/Channel';
 import Games from './components/Games';
 import './App.css';
